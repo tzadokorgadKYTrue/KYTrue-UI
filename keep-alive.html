@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head><title>KYTrue Keep Alive</title></head>
+<body>
+<script>
+// Ping כל 10 דקות
+setInterval(function(){
+  fetch('https://kytrue-api.onrender.com/health').catch(()=>{});
+  fetch('https://kytrue-ui.onrender.com').catch(()=>{});
+}, 600000);
+</script>
+</body>
+</html>

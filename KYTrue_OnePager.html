@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>KYTrue&trade;, Executive One-Pager</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --coral:#ff4d1a;--coral-soft:#fff3f0;--coral-dim:#e63d0a;
+  --dark:#1a1208;--off:#f7f5f2;--muted:#887766;--light:#e8e4de;
+  --white:#fff;--green:#22aa77;--amber:#ffaa00;
+  --serif:'Fraunces',Georgia,serif;--sans:'Inter',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',Consolas,monospace;--display:'Anton',sans-serif;
+}
+html,body{font-family:var(--sans);background:var(--off);color:var(--dark);line-height:1.55;font-size:15px;overflow-x:hidden}
+.nav{position:sticky;top:0;z-index:100;background:rgba(247,245,242,.88);backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--light)}
+.nav-in{max-width:1280px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:16px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.brand-sq{width:34px;height:34px;background:var(--coral);border-radius:8px;position:relative;display:flex;align-items:center;justify-content:center}
+.brand-badge{position:absolute;top:-5px;right:-5px;width:15px;height:15px;background:var(--dark);border-radius:50%;border:2px solid var(--off);display:flex;align-items:center;justify-content:center}
+.brand-name{font-family:var(--display);font-size:22px;letter-spacing:.5px;color:var(--dark)}.brand-name span{color:var(--coral)}
+.brand-tag{font-size:9px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted)}
+.nav-links{display:flex;gap:2px;flex:1;align-items:center}
+.nav-link{padding:0 14px;height:36px;border-radius:8px;color:var(--muted);font-size:13px;font-weight:600;cursor:pointer;background:none;border:1px solid transparent;font-family:inherit;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;text-decoration:none}
+.nav-link:hover{color:var(--dark);border-color:var(--light);background:rgba(0,0,0,.03)}
+.nav-link.active{color:var(--dark);background:var(--white);border-color:var(--dark);font-weight:700;box-shadow:0 1px 4px rgba(0,0,0,.1)}
+.nav-cta{display:flex;gap:8px;align-items:center;margin-left:auto}
+.btn{padding:0 18px;height:36px;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid transparent;font-family:inherit;transition:all .15s;white-space:nowrap;display:inline-flex;align-items:center;gap:6px;text-decoration:none}
+.btn-ghost{background:transparent;color:var(--dark);border-color:var(--light)}.btn-ghost:hover{border-color:var(--dark);background:rgba(0,0,0,.03)}
+.btn-coral{background:var(--coral);color:var(--white)}.btn-coral:hover{background:var(--coral-dim)}
+.tag{display:inline-block;font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;padding:3px 8px;border-radius:5px}
+.tg{background:rgba(34,170,119,.1);color:var(--green)}.tc{background:var(--coral-soft);color:var(--coral)}.ta{background:rgba(255,170,0,.1);color:var(--amber)}
+
+/* PAGE */
+.page{max-width:1080px;margin:40px auto 60px;background:var(--white);border:1px solid var(--light);border-radius:20px;overflow:hidden;box-shadow:0 8px 48px rgba(0,0,0,.07)}
+@media print{.nav,.print-btn{display:none!important}.page{margin:0;box-shadow:none;border:none;border-radius:0}}
+
+/* TOP BAR */
+.top-bar{background:var(--dark);padding:20px 40px;display:flex;justify-content:space-between;align-items:center}
+.top-bar-logo{font-family:var(--display);font-size:26px;color:var(--white)}.top-bar-logo span{color:var(--coral)}
+.top-bar-tag{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,.3);letter-spacing:2px;text-transform:uppercase}
+
+/* HERO ROW */
+.hero-row{display:grid;grid-template-columns:1fr 300px}
+.hero-left{background:var(--coral);padding:44px;color:var(--white);display:flex;flex-direction:column;justify-content:flex-end}
+.hero-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.5);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.hero-h{font-family:var(--display);font-size:clamp(40px,5vw,60px);line-height:.95;text-transform:uppercase;letter-spacing:-.5px;margin-bottom:12px}
+.hero-sub{font-size:14px;color:rgba(255,255,255,.8);line-height:1.6;max-width:480px}
+.hero-right{background:var(--dark);padding:36px 28px;display:flex;flex-direction:column;gap:20px;justify-content:center}
+.stat-block{border-bottom:1px solid rgba(255,255,255,.06);padding-bottom:18px}
+.stat-block:last-child{border:none;padding:0}
+.stat-num{font-family:var(--display);font-size:36px;color:var(--coral);letter-spacing:-1px;line-height:1}
+.stat-label{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.3);letter-spacing:1.5px;text-transform:uppercase;margin-top:4px}
+
+/* BODY COLS */
+.body-grid{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--light)}
+.body-col{padding:28px 24px;border-right:1px solid var(--light)}.body-col:last-child{border:none}
+.col-eyebrow{font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.col-eyebrow::before{content:'';display:block;width:14px;height:2px;background:var(--coral)}
+.col-title{font-family:var(--display);font-size:20px;letter-spacing:.2px;margin-bottom:10px;line-height:1}
+.col-body{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:13px}
+.col-list{list-style:none;display:flex;flex-direction:column;gap:5px}
+.col-list li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;line-height:1.5}
+.col-list li::before{content:'→';position:absolute;left:0;color:var(--coral);font-size:9px;top:3px}
+
+/* HOW IT WORKS */
+.how-strip{background:var(--off);padding:24px 40px;border-top:1px solid var(--light);border-bottom:1px solid var(--light)}
+.how-strip-label{font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:16px}
+.how-steps{display:flex;gap:0}
+.how-step{flex:1;position:relative;padding-right:20px}
+.how-step-num{font-family:var(--display);font-size:13px;color:var(--coral);letter-spacing:.5px;margin-bottom:5px}
+.how-step-title{font-size:12px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.how-step-desc{font-size:11px;color:var(--muted);line-height:1.5}
+.how-step::after{content:'→';position:absolute;right:4px;top:6px;color:rgba(255,77,26,.3);font-size:14px}
+.how-step:last-child::after{display:none}
+
+/* USE CASES */
+.use-cases{padding:24px 40px;border-bottom:1px solid var(--light)}
+.use-cases-label{font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:16px}
+.use-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.use-card{border:1px solid var(--light);border-radius:8px;padding:12px 10px}
+.use-card-name{font-size:11px;font-weight:700;color:var(--dark);margin-bottom:2px;line-height:1.3}
+.use-card-desc{font-size:10px;color:var(--muted);line-height:1.4}
+.use-card-dot{width:6px;height:6px;border-radius:50%;background:var(--coral);margin-bottom:6px}
+
+/* THREATS */
+.threats{background:var(--dark);padding:24px 40px;border-bottom:1px solid rgba(255,255,255,.05)}
+.threats-label{font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:14px}
+.threats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.threat{padding:18px;background:rgba(255,255,255,.03);border-radius:8px;border:1px solid rgba(255,255,255,.06)}
+.threat-title{font-size:12px;font-weight:700;color:var(--white);margin-bottom:5px}
+.threat-desc{font-size:11px;color:rgba(255,255,255,.38);line-height:1.5}
+.threat-stat{font-family:var(--mono);font-size:9px;color:var(--green);margin-top:8px}
+
+/* COMPLIANCE */
+.compliance{padding:20px 40px;border-bottom:1px solid var(--light);display:flex;align-items:center;gap:28px;flex-wrap:wrap}
+.compliance-label{font-family:var(--mono);font-size:9px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;font-weight:700;flex-shrink:0}
+.comp-badges{display:flex;gap:8px;flex-wrap:wrap}
+.comp-badge{font-family:var(--mono);font-size:10px;padding:4px 10px;border:1px solid var(--light);border-radius:5px;color:var(--muted);font-weight:600}
+
+/* BOTTOM */
+.bottom-strip{display:grid;grid-template-columns:1fr 1fr 1fr;border-top:1px solid var(--light)}
+.bottom-cell{padding:22px 24px;border-right:1px solid var(--light)}.bottom-cell:last-child{border:none}
+.bottom-cell-label{font-family:var(--mono);font-size:9px;color:var(--coral);letter-spacing:2px;text-transform:uppercase;font-weight:700;margin-bottom:8px}
+.bottom-cell-val{font-size:13px;color:var(--dark);line-height:1.55}
+.bottom-cell-val strong{display:block;font-family:var(--display);font-size:20px;letter-spacing:.2px;margin-bottom:3px;color:var(--coral)}
+
+.doc-footer{background:var(--off);padding:16px 40px;display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--light)}
+.doc-footer-copy{font-size:11px;color:var(--muted);font-family:var(--mono)}
+
+.print-btn{position:fixed;bottom:28px;right:28px;background:var(--coral);color:#fff;padding:10px 20px;border-radius:9px;font-family:var(--display);font-size:12px;letter-spacing:1px;border:none;cursor:pointer;box-shadow:0 4px 18px rgba(255,77,26,.35);z-index:100;display:flex;align-items:center;gap:7px}
+.print-btn:hover{background:var(--coral-dim)}
+
+footer{background:var(--dark);padding:36px 24px;margin-top:0}
+.ft{max-width:1280px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:18px}
+.ft-logo{font-family:var(--display);font-size:18px;color:var(--white)}.ft-logo span{color:var(--coral)}
+.ft-lnks{display:flex;gap:18px}
+.ft-lnks a{font-size:12px;color:rgba(255,255,255,.32);text-decoration:none;transition:color .12s}.ft-lnks a:hover{color:var(--coral)}
+
+@media(max-width:800px){
+  .hero-row,.body-grid,.how-steps,.use-grid,.threats-grid,.bottom-strip{grid-template-columns:1fr}
+  .body-col,.bottom-cell{border-right:none;border-bottom:1px solid var(--light)}
+  .page{margin:0;border-radius:0}
+}
+</style>
+</head>
+<body>
+
+<button class="print-btn" onclick="window.print()">
+ <svg width="14" height="14" viewBox="0 0 20 20" fill="none"><rect x="3" y="7" width="14" height="10" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 7V4a1 1 0 011-1h6a1 1 0 011 1v3" stroke="currentColor" stroke-width="1.5"/><path d="M7 13h6M7 16h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+ Print / Save PDF
+</button>
+
+<nav class="nav">
+ <div class="nav-in">
+ <a href="KYTrue_Product.html" class="brand">
+ <div class="brand-sq">
+ <svg viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="6" height="16" rx="1" fill="#fff"/><polygon points="8,2 16,2 11,9 8,9" fill="#fff"/><polygon points="8,10 11.5,10 17,18 13,18" fill="#fff"/></svg>
+ <div class="brand-badge"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4.2 3.2,6.5 7,1.5" stroke="#ff4d1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+ </div>
+ <div><div class="brand-name">KY<span>True</span></div><div class="brand-tag">Verified Identity</div></div>
+ </a>
+ <div class="nav-links">
+ <a href="KYTrue_Science.html" class="nav-link">Science &amp; Privacy</a>
+ <a href="KYTrue_Investors.html" class="nav-link">Investors</a>
+ <a href="KYTrue_OnePager.html" class="nav-link active">One-Pager</a>
+ <a href="KYTrue_Pricing.html" class="nav-link">Pricing</a>
+ </div>
+ <div class="nav-cta">
+ <a href="kytrue-dashboard.html" class="btn btn-ghost"><svg width="13" height="13" viewBox="0 0 16 16" fill="none"><rect x="1" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="1" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="1" y="9" width="6" height="6" rx="1.5" fill="currentColor"/><rect x="9" y="9" width="6" height="6" rx="1.5" fill="currentColor"/></svg>Monitor</a>
+ <a href="KYTrue_Product.html" class="btn btn-coral">Get API key &rarr;</a>
+ </div>
+ </div>
+</nav>
+
+<div class="page">
+ <div class="top-bar">
+ <div class="top-bar-logo">KY<span>True</span>&trade;</div>
+ <div class="top-bar-tag">Executive Overview &middot; Confidential &middot; May 2026 &middot; Strictly Confidential</div>
+ </div>
+
+ <div class="hero-row">
+ <div class="hero-left">
+ <div class="hero-label">KYTrue&trade; &times; Powered by Revealense Illuminator&reg;</div>
+ <div class="hero-h">Verify the person.<br/>Not the document.</div>
+ <div class="hero-sub">The world's first identity platform that verifies the living person, not the document. KYTrue is the commercial product layer built on the Revealense Illuminator&reg;, proven in medical and defence at absolute precision.</div>
+ </div>
+ <div class="hero-right">
+ <div class="stat-block"><div class="stat-num">$380B</div><div class="stat-label">Annual global identity fraud</div></div>
+ <div class="stat-block"><div class="stat-num">&lt;50s</div><div class="stat-label">Full liveness + identity + sincerity</div></div>
+ <div class="stat-block"><div class="stat-num">0</div><div class="stat-label">Biometric records stored</div></div>
+ </div>
+ </div>
+
+ <div class="body-grid">
+ <div class="body-col">
+ <div class="col-eyebrow">The problem</div>
+ <div class="col-title">KYC is broken</div>
+ <div class="col-body">Every existing system relies on documents that can be stolen, faces that can be deepfaked, and databases that can be breached. The financial system is authenticating paper, not people.</div>
+ <ul class="col-list">
+ <li>$380B annual global identity fraud</li>
+ <li>Deepfake fraud: fastest-growing banking attack vector</li>
+ <li>$17.5T agentic commerce by 2030, needs identity layer</li>
+ <li>KYC market $32B by 2027, addressable now</li>
+ </ul>
+ </div>
+ <div class="body-col">
+ <div class="col-eyebrow">The solution</div>
+ <div class="col-title">Biological identity</div>
+ <div class="col-body">KYTrue is the commercial product layer built on the Revealense Illuminator&reg;, real-time AI video/voice psychophysiological analysis. Three fused signal layers. Under 50 seconds. Signed <strong>kyt_id</strong> credential output. No stored biometrics.</div>
+ <ul class="col-list">
+ <li>Layer 01: Haemodynamic scan (15s), sub-dermal blood-flow</li>
+ <li>Layer 02: Behavioural baseline (10s), gaze, expression</li>
+ <li>Layer 03: Sincerity engine (20s), honesty probability</li>
+ <li>Output: LiveScore&trade; 0&ndash;1000 + signed kyt_id credential</li>
+ </ul>
+ </div>
+ <div class="body-col">
+ <div class="col-eyebrow">The difference</div>
+ <div class="col-title">Why nothing else works</div>
+ <div class="col-body">Existing solutions stop at the face. KYTrue&trade; goes beneath it, to the involuntary biological signals that no impersonator can reproduce and no database breach can expose.</div>
+ <ul class="col-list">
+ <li>Jumio / Onfido: document + selfie; stealable</li>
+ <li>iProov: facial liveness only; deepfake-vulnerable</li>
+ <li>BioCatch: behavioural session; no identity credential</li>
+ <li>KYTrue&trade;: all three layers + credential + 3 PCT applications + Revealense engine</li>
+ </ul>
+ </div>
+ </div>
+
+ <div class="how-strip">
+ <div class="how-strip-label">How it works; under 50 seconds end to end</div>
+ <div class="how-steps">
+ <div class="how-step"><div class="how-step-num">01</div><div class="how-step-title">Session created</div><div class="how-step-desc">Relying party calls POST /v1/sessions. User receives one-time secure link.</div></div>
+ <div class="how-step"><div class="how-step-num">02</div><div class="how-step-title">Camera opens</div><div class="how-step-desc">Standard camera. No app download. No hardware. WebAssembly engine loads in-browser.</div></div>
+ <div class="how-step"><div class="how-step-num">03</div><div class="how-step-title">Biological capture</div><div class="how-step-desc">Three parallel signal streams. All processing on-device. No video transmitted.</div></div>
+ <div class="how-step"><div class="how-step-num">04</div><div class="how-step-title">LiveScore&trade; computed</div><div class="how-step-desc">Fused score 0&ndash;1000. Raw signals destroyed. Score + hash transmitted only.</div></div>
+ <div class="how-step"><div class="how-step-num">05</div><div class="how-step-title">kyt_id issued</div><div class="how-step-desc">Signed credential (ECDSA P-256) via webhook. Time-bound, dispute-proof.</div></div>
+ </div>
+ </div>
+
+ <div class="use-cases">
+ <div class="use-cases-label">Financial use cases: all supported via single API</div>
+ <div class="use-grid">
+ <div class="use-card"><div class="use-card-dot"></div><div class="use-card-name">Account opening</div><div class="use-card-desc">KYC onboarding without document scanning</div></div>
+ <div class="use-card"><div class="use-card-dot"></div><div class="use-card-name">Transaction auth</div><div class="use-card-desc">Per-transaction biometric authorisation</div></div>
+ <div class="use-card"><div class="use-card-dot"></div><div class="use-card-name">Fraud prevention</div><div class="use-card-desc">Identity theft &amp; deepfake blocking</div></div>
+ <div class="use-card"><div class="use-card-dot"></div><div class="use-card-name">AI agent anchor</div><div class="use-card-desc">Human identity behind autonomous payments</div></div>
+ <div class="use-card"><div class="use-card-dot"></div><div class="use-card-name">AML / compliance</div><div class="use-card-desc">Enhanced due diligence</div></div>
+ <div class="use-card"><div class="use-card-dot"></div><div class="use-card-name">Step-up auth</div><div class="use-card-desc">Re-verify for high-value events</div></div>
+ </div>
+ </div>
+
+ <div class="threats">
+ <div class="threats-label">Three threats eliminated; by design</div>
+ <div class="threats-grid">
+ <div class="threat"><div class="threat-title">Identity theft</div><div class="threat-desc">Stolen passport or leaked selfie cannot reproduce a live blood-flow signature. The biological token is produced in the moment: it cannot be pre-recorded or replayed.</div><div class="threat-stat">&#8595; 94% synthetic identity fraud in pilots</div></div>
+ <div class="threat"><div class="threat-title">Deepfake fraud</div><div class="threat-desc">Layer 01 detects the absence of living tissue within 15 seconds. A deepfake face has no sub-dermal haemodynamic response. Detection is structural, not pattern-matching.</div><div class="threat-stat">100% deepfake detection in red-team testing</div></div>
+ <div class="threat"><div class="threat-title">Chargeback fraud</div><div class="threat-desc">Every verified transaction is anchored to a timestamped kyt_id. "I didn't do this" becomes cryptographically unprovable when a living person's biological signature authorised the action.</div><div class="threat-stat">Dispute-proof biometric authorisation trail</div></div>
+ </div>
+ </div>
+
+ <div class="compliance">
+ <div class="compliance-label">Compliance &amp; Privacy</div>
+ <div class="comp-badges">
+ <div class="comp-badge">GDPR (Art. 9 by architecture)</div>
+ <div class="comp-badge">PSD2 / SCA</div>
+ <div class="comp-badge">eIDAS 2.0</div>
+ <div class="comp-badge">CCPA</div>
+ <div class="comp-badge">SOC 2 Type II (Q3 2025)</div>
+ <div class="comp-badge">ISO 27001 (Q3 2025)</div>
+ <div class="comp-badge">Zero stored biometrics</div>
+ <div class="comp-badge">28 clinical studies (Revealense)</div>
+ <div class="comp-badge">3 PCT applications pending</div>
+ </div>
+ </div>
+
+ <div class="bottom-strip">
+ <div class="bottom-cell">
+ <div class="bottom-cell-label">Integration</div>
+ <div class="bottom-cell-val"><strong>RESTful API</strong>Single POST to create a session. Webhook or polling for result. Web SDK + React component included. Go live in 48 hours.</div>
+ </div>
+ <div class="bottom-cell">
+ <div class="bottom-cell-label">Pricing</div>
+ <div class="bottom-cell-val"><strong>From $0.05/session</strong>1,000 free sessions/month on Developer tier. Growth $999/mo. Enterprise custom. No hardware costs.</div>
+ </div>
+ <div class="bottom-cell">
+ <div class="bottom-cell-label">Next step</div>
+ <div class="bottom-cell-val"><strong style="color:var(--coral)">kytrue.com</strong>Request a technical briefing or the full investor position paper. <a href="mailto:investors@kytrue.com" style="color:var(--coral);font-weight:600">investors@kytrue.com</a> &middot; Tzadok Orgad, Founder &amp; Principal</div>
+ </div>
+ </div>
+
+ <div class="doc-footer">
+ <div class="doc-footer-copy">&copy; 2026 KYTrue&trade; Ltd. &middot; Strictly Confidential &middot; Powered by Revealense Illuminator&reg; &middot; Tzadok Orgad, Founder &amp; Principal</div>
+ <a href="KYTrue_Investors.html" class="btn btn-coral" style="height:32px;font-size:12px">Request Position Paper →</a>
+ </div>
+</div>
+
+<footer>
+ <div class="ft">
+ <div class="ft-logo">KY<span>True</span>&trade;</div>
+ <div class="ft-lnks">
+ <a href="KYTrue_Product.html">Product</a>
+ <a href="KYTrue_Science.html">Science</a>
+ <a href="KYTrue_Investors.html">Investors</a>
+ <a href="KYTrue_Pricing.html">Pricing</a>
+ </div>
+ </div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>KYTrue™, How It Works</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Fraunces:ital,opsz,wght@0,9..144,400;1,9..144,400&family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --coral:#ff4d1a;--coral-soft:#fff3f0;--coral-dim:#e63d0a;
+  --dark:#1a1208;--off:#f7f5f2;--muted:#887766;--light:#e8e4de;
+  --white:#fff;--green:#22aa77;
+  --serif:'Fraunces',Georgia,serif;--sans:'Inter',-apple-system,sans-serif;
+  --mono:'JetBrains Mono',Consolas,monospace;--display:'Anton',sans-serif;
+}
+body{font-family:var(--sans);background:var(--white);color:var(--dark);min-height:100vh;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px}
+
+/* ── PAGE WRAPPER ── */
+.page{width:100%;max-width:860px;background:var(--off);border-radius:24px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.12)}
+
+/* ── HEADER ── */
+.hdr{background:var(--white);padding:44px 40px 36px;text-align:center;border-bottom:2px solid var(--coral)}
+.hdr-eyebrow{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--coral);margin-bottom:10px}
+.hdr-h1{font-family:var(--display);font-size:clamp(38px,6vw,62px);text-transform:uppercase;letter-spacing:-.5px;line-height:.95;color:var(--dark)}
+.hdr-h1 em{color:var(--coral);font-style:normal}
+.hdr-sub{font-family:var(--serif);font-size:18px;font-style:italic;color:var(--muted);margin-top:10px}
+
+/* ── CENTRE LOGO ── */
+.centre-wrap{position:relative;display:flex;align-items:center;justify-content:center;padding:24px 0 0}
+.centre-logo{width:148px;height:148px;background:var(--white);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 0 0 6px rgba(255,77,26,.15),0 0 0 14px rgba(255,77,26,.07),0 4px 24px rgba(0,0,0,.12)}
+.centre-logo-icon{width:44px;height:44px;background:var(--coral);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:6px;position:relative;flex-shrink:0}
+.centre-logo-icon-badge{position:absolute;top:-5px;right:-5px;width:14px;height:14px;background:var(--dark);border-radius:50%;border:2px solid var(--white);display:flex;align-items:center;justify-content:center}
+.centre-logo-name{font-family:var(--display);font-size:22px;color:var(--dark);letter-spacing:.5px;line-height:1}
+.centre-logo-name span{color:var(--coral)}
+.centre-logo-tag{font-size:7px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--muted);margin-top:3px}
+
+/* ── SPOKES (SVG lines) ── */
+.spokes-svg{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:1}
+
+/* ── WHEEL LAYOUT ── */
+.wheel{position:relative;padding:28px 32px 36px}
+.wheel-inner{position:relative;display:grid;grid-template-columns:1fr 180px 1fr;grid-template-rows:repeat(3,auto);gap:16px;align-items:center}
+
+/* ── NODE CARDS ── */
+.node{background:var(--white);border:1.5px solid var(--light);border-radius:14px;padding:16px 16px 14px;transition:box-shadow .2s,transform .2s;cursor:default}
+.node:hover{box-shadow:0 8px 28px rgba(0,0,0,.1);transform:translateY(-2px)}
+.node-head{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.node-num{font-family:var(--display);font-size:11px;color:rgba(255,77,26,.5);letter-spacing:1px;flex-shrink:0;line-height:1}
+.node-icon{width:30px;height:30px;border-radius:8px;background:var(--coral-soft);display:flex;align-items:center;justify-content:center;color:var(--coral);flex-shrink:0}
+.node-title{font-family:var(--display);font-size:13px;letter-spacing:.3px;color:var(--dark)}
+.node-subtitle{font-family:var(--mono);font-size:9px;color:var(--coral);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:7px;padding-left:2px}
+.node-bullets{list-style:none;display:flex;flex-direction:column;gap:3px;margin-bottom:9px}
+.node-bullets li{font-size:11px;color:var(--muted);padding-left:12px;position:relative;line-height:1.4}
+.node-bullets li::before{content:'•';position:absolute;left:1px;color:var(--coral);font-size:9px;top:1px}
+.node-best{font-family:var(--mono);font-size:8.5px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--coral);margin-bottom:3px}
+.node-for{font-size:11px;color:var(--dark);font-weight:600;padding-left:2px}
+
+/* Right-aligned nodes */
+.node.right .node-head{flex-direction:row-reverse;text-align:right}
+.node.right .node-subtitle{text-align:right}
+.node.right .node-bullets{padding-left:0}
+.node.right .node-bullets li{padding-left:0;padding-right:12px}
+.node.right .node-bullets li::before{left:auto;right:1px}
+.node.right .node-best,.node.right .node-for{text-align:right}
+
+/* Centre column */
+.centre-col{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0}
+
+/* ── CONNECTOR DOTS ── */
+.node{position:relative}
+.node::after{content:'';position:absolute;width:8px;height:8px;border-radius:50%;background:var(--coral);border:2px solid var(--white);box-shadow:0 0 0 1.5px var(--coral)}
+.node.left::after{right:-4px;top:50%;transform:translateY(-50%)}
+.node.right::after{left:-4px;top:50%;transform:translateY(-50%)}
+.node.top-left::after{right:-4px;bottom:24px}
+.node.bot-left::after{right:-4px;top:24px}
+.node.top-right::after{left:-4px;bottom:24px}
+.node.bot-right::after{left:-4px;top:24px}
+
+/* ── FOOTER ── */
+.footer{background:var(--dark);padding:22px 40px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.footer-brand{font-family:var(--display);font-size:20px;color:var(--white)}.footer-brand span{color:var(--coral)}
+.footer-tag{font-family:var(--mono);font-size:9px;color:rgba(255,255,255,.35);letter-spacing:2px;text-transform:uppercase}
+.footer-links{display:flex;gap:16px}
+.footer-links a{font-size:11px;color:rgba(255,255,255,.35);text-decoration:none;font-weight:600;letter-spacing:.5px;transition:color .12s}
+.footer-links a:hover{color:var(--coral)}
+
+/* print */
+.print-btn{position:fixed;bottom:24px;right:24px;background:var(--coral);color:#fff;padding:9px 18px;border-radius:8px;font-family:var(--display);font-size:11px;letter-spacing:1px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(255,77,26,.4);z-index:100;display:flex;align-items:center;gap:6px}
+.back-btn{position:fixed;bottom:24px;left:24px;background:var(--dark);color:#fff;padding:9px 18px;border-radius:8px;font-family:var(--display);font-size:11px;letter-spacing:1px;border:none;cursor:pointer;box-shadow:0 4px 16px rgba(0,0,0,.25);z-index:100;display:flex;align-items:center;gap:6px;text-decoration:none}
+.back-btn:hover{background:var(--coral)}
+@media print{.back-btn{display:none!important}}
+@media print{.print-btn{display:none!important}.page{box-shadow:none}}
+@media(max-width:680px){.wheel-inner{grid-template-columns:1fr}.centre-col{margin:16px 0}.node::after{display:none}}
+</style>
+</head>
+<body>
+
+<a href="KYTrue_Product.html" class="back-btn">
+ <svg width="13" height="13" viewBox="0 0 18 18" fill="none"><path d="M11 4L5 9l6 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+ Back to main
+</a>
+<button class="print-btn" onclick="window.print()">
+ <svg width="13" height="13" viewBox="0 0 18 18" fill="none"><rect x="2" y="6" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 6V4a1 1 0 011-1h6a1 1 0 011 1v2" stroke="currentColor" stroke-width="1.5"/><path d="M6 12h6M6 14.5h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+ Save PDF
+</button>
+
+<div class="page">
+
+ <!-- HEADER -->
+ <div class="hdr">
+ <div class="hdr-eyebrow">Behavioural biometric identity platform</div>
+ <h1 class="hdr-h1">HOW <em>KY</em><span style="color:var(--coral)">True™</span><br/>WORKS</h1>
+ <div class="hdr-sub">Verify the living person, not the document · Under 50 seconds · Powered by Revealense Illuminator®</div>
+ </div>
+
+ <!-- WHEEL -->
+ <div class="wheel">
+ <div class="wheel-inner">
+
+ <!-- LEFT COLUMN (nodes 1,2,3) -->
+ <div style="display:flex;flex-direction:column;gap:14px">
+
+ <!-- 01 -->
+ <div class="node left top-left">
+ <div class="node-head">
+ <div class="node-num">01</div>
+ <div class="node-icon">
+ <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2a8 8 0 100 16A8 8 0 0010 2z" stroke="currentColor" stroke-width="1.5"/><path d="M10 6v4l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+ </div>
+ <div class="node-title">SESSION CREATED</div>
+ </div>
+ <div class="node-subtitle">How you trigger a check</div>
+ <ul class="node-bullets">
+ <li>Relying party calls POST /v1/sessions</li>
+ <li>User receives a unique one-time secure link</li>
+ <li>Works via web, mobile, or embedded SDK</li>
+ </ul>
+ <div class="node-best">Best for</div>
+ <div class="node-for">Banks · Insurers · Crypto exchanges</div>
+ </div>
+
+ <!-- 02 -->
+ <div class="node left">
+ <div class="node-head">
+ <div class="node-num">02</div>
+ <div class="node-icon">
+ <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="3" y="6" width="14" height="11" rx="2" stroke="currentColor" stroke-width="1.5"/><circle cx="10" cy="11.5" r="2.5" stroke="currentColor" stroke-width="1.5"/><path d="M7 6V5a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.5"/></svg>
+ </div>
+ <div class="node-title">CAMERA CAPTURE</div>
+ </div>
+ <div class="node-subtitle">On-device · no upload · no app</div>
+ <ul class="node-bullets">
+ <li>Standard camera; laptop or smartphone</li>
+ <li>WebAssembly engine runs in-browser</li>
+ <li>No video leaves the device</li>
+ </ul>
+ <div class="node-best">Best for</div>
+ <div class="node-for">Any regulated onboarding flow</div>
+ </div>
+
+ <!-- 03 -->
+ <div class="node left bot-left">
+ <div class="node-head">
+ <div class="node-num">03</div>
+ <div class="node-icon">
+ <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 2L2 7l8 4 8-4-8-5z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 13l8 4 8-4M2 10l8 4 8-4" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+ </div>
+ <div class="node-title">LAYER 1, HAEMO</div>
+ </div>
+ <div class="node-subtitle">15 seconds · sub-dermal</div>
+ <ul class="node-bullets">
+ <li>Blood-flow pattern unique to every living person</li>
+ <li>Deepfake face? No haemodynamic signal beneath</li>
+ <li>Powered by Revealense Illuminator®</li>
+ </ul>
+ <div class="node-best">Detects</div>
+ <div class="node-for">Deepfakes · synthetic identity · replay attacks</div>
+ </div>
+
+ </div>
+
+ <!-- CENTRE COLUMN -->
+ <div class="centre-col">
+ <div class="centre-logo">
+ <div class="centre-logo-icon">
+ <svg width="26" height="26" viewBox="0 0 20 20" fill="none"><rect x="2" y="2" width="6" height="16" rx="1" fill="#fff"/><polygon points="8,2 16,2 11,9 8,9" fill="#fff"/><polygon points="8,10 11.5,10 17,18 13,18" fill="#fff"/></svg>
+ <div class="centre-logo-icon-badge"><svg viewBox="0 0 8 8" fill="none"><polyline points="1,4.2 3.2,6.5 7,1.5" stroke="#ff4d1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+ </div>
+ <div class="centre-logo-name">KY<span>True</span></div>
+ <div class="centre-logo-tag">Verified Identity</div>
+ </div>
+ <svg width="100%" height="300" viewBox="0 0 180 300" fill="none" style="margin-top:-65px;margin-bottom:-65px">
+ <!-- spokes from centre (90,150) to card dots -->
+ <circle cx="90" cy="150" r="62" stroke="#ff4d1a" stroke-width="1" stroke-dasharray="4 4" opacity=".3"/>
+ <circle cx="90" cy="150" r="4" fill="#ff4d1a" opacity=".6"/>
+ <!-- left dots -->
+ <line x1="90" y1="150" x2="28" y2="60" stroke="#ff4d1a" stroke-width="1" opacity=".25"/>
+ <line x1="90" y1="150" x2="28" y2="150" stroke="#ff4d1a" stroke-width="1" opacity=".25"/>
+ <line x1="90" y1="150" x2="28" y2="240" stroke="#ff4d1a" stroke-width="1" opacity=".25"/>
+ <!-- right dots -->
+ <line x1="90" y1="150" x2="152" y2="60" stroke="#ff4d1a" stroke-width="1" opacity=".25"/>
+ <line x1="90" y1="150" x2="152" y2="150" stroke="#ff4d1a" stroke-width="1" opacity=".25"/>
+ <line x1="90" y1="150" x2="152" y2="240" stroke="#ff4d1a" stroke-width="1" opacity=".25"/>
+ <!-- outer dots -->
+ <circle cx="28" cy="60" r="3" fill="#ff4d1a" opacity=".5"/>
+ <circle cx="28" cy="150" r="3" fill="#ff4d1a" opacity=".5"/>
+ <circle cx="28" cy="240" r="3" fill="#ff4d1a" opacity=".5"/>
+ <circle cx="152" cy="60" r="3" fill="#ff4d1a" opacity=".5"/>
+ <circle cx="152" cy="150" r="3" fill="#ff4d1a" opacity=".5"/>
+ <circle cx="152" cy="240" r="3" fill="#ff4d1a" opacity=".5"/>
+ </svg>
+ <!-- LiveScore badge -->
+ <div style="background:var(--dark);border-radius:12px;padding:14px 18px;text-align:center;width:100%;margin-top:-20px">
+ <div style="font-family:var(--mono);font-size:8px;color:var(--coral);letter-spacing:2px;font-weight:700;text-transform:uppercase;margin-bottom:6px">LiveScore™ output</div>
+ <div style="font-family:var(--display);font-size:32px;color:var(--white);letter-spacing:-1px;line-height:1">947</div>
+ <div style="font-size:9px;color:rgba(255,255,255,.4);margin-top:2px;font-weight:600">TRUSTED · AUTO-APPROVE</div>
+ </div>
+ </div>
+
+ <!-- RIGHT COLUMN (nodes 4,5,6) -->
+ <div style="display:flex;flex-direction:column;gap:14px">
+
+ <!-- 04 -->
+ <div class="node right top-right">
+ <div class="node-head">
+ <div class="node-icon">
+ <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M3 10h14M10 3l7 7-7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+ </div>
+ <div class="node-title">LAYER 2, BEHAVIOUR</div>
+ <div class="node-num">04</div>
+ </div>
+ <div class="node-subtitle">10 seconds · micro-motor model</div>
+ <ul class="node-bullets" style="text-align:right">
+ <li>Gaze, expression, cadence, archetype</li>
+ <li>Real-time impostor detection at 0.001% FAR</li>
+ <li>Continuous baseline across sessions</li>
+ </ul>
+ <div class="node-best">Detects</div>
+ <div class="node-for">Impersonation · account takeover · coercion</div>
+ </div>
+
+ <!-- 05 -->
+ <div class="node right">
+ <div class="node-head">
+ <div class="node-icon">
+ <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3a7 7 0 100 14A7 7 0 0010 3z" stroke="currentColor" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+ </div>
+ <div class="node-title">LAYER 3, SINCERITY</div>
+ <div class="node-num">05</div>
+ </div>
+ <div class="node-subtitle">20 seconds · honesty probability</div>
+ <ul class="node-bullets" style="text-align:right">
+ <li>Autonomic stress + behavioural incongruence</li>
+ <li>No commercial equivalent worldwide</li>
+ <li>Protected under PCT patent filings</li>
+ </ul>
+ <div class="node-best">Detects</div>
+ <div class="node-for">Fraud intent · false claims · duress</div>
+ </div>
+
+ <!-- 06 -->
+ <div class="node right bot-right">
+ <div class="node-head">
+ <div class="node-icon">
+ <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="3" y="5" width="14" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 5V4a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.5"/><polyline points="7,10 9.5,12.5 13,8.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+ </div>
+ <div class="node-title">kyt_id ISSUED</div>
+ <div class="node-num">06</div>
+ </div>
+ <div class="node-subtitle">Signed credential · &lt;50s total</div>
+ <ul class="node-bullets" style="text-align:right">
+ <li>ECDSA P-256 signed · zero raw biometrics stored</li>
+ <li>Time-bound TTL · per-transaction scope</li>
+ <li>Locally verifiable; no KYTrue® callback needed</li>
+ </ul>
+ <div class="node-best">Best for</div>
+ <div class="node-for">KYC · KYB · FNOL · Crypto · AI agents · CBDC</div>
+ </div>
+
+ </div>
+ </div>
+
+ <!-- BOTTOM ROW: Score bands -->
+ <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:20px;padding:0 4px">
+ <div style="background:var(--green);border-radius:10px;padding:12px 10px;text-align:center">
+ <div style="font-family:var(--display);font-size:15px;color:#fff;letter-spacing:.3px;margin-bottom:3px">900–1000</div>
+ <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.85);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">TRUSTED</div>
+ <div style="font-size:10px;color:rgba(255,255,255,.8);line-height:1.3">AUTO APPROVE, issue kyt_id</div>
+ </div>
+ <div style="background:#3d8f5f;border-radius:10px;padding:12px 10px;text-align:center">
+ <div style="font-family:var(--display);font-size:15px;color:#fff;letter-spacing:.3px;margin-bottom:3px">750–899</div>
+ <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.85);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">VERIFIED</div>
+ <div style="font-size:10px;color:rgba(255,255,255,.8);line-height:1.3">APPROVE, no further action</div>
+ </div>
+ <div style="background:var(--amber,#ffaa00);border-radius:10px;padding:12px 10px;text-align:center">
+ <div style="font-family:var(--display);font-size:15px;color:#fff;letter-spacing:.3px;margin-bottom:3px">600–749</div>
+ <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.85);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">BORDERLINE</div>
+ <div style="font-size:10px;color:rgba(255,255,255,.9);line-height:1.3">HUMAN REVIEW, do not auto-deny</div>
+ </div>
+ <div style="background:#c05030;border-radius:10px;padding:12px 10px;text-align:center">
+ <div style="font-family:var(--display);font-size:15px;color:#fff;letter-spacing:.3px;margin-bottom:3px">400–599</div>
+ <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.85);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">SUSPICIOUS</div>
+ <div style="font-size:10px;color:rgba(255,255,255,.9);line-height:1.3">ENHANCED CHECK, SIU / fraud team</div>
+ </div>
+ <div style="background:#e24b4a;border-radius:10px;padding:12px 10px;text-align:center">
+ <div style="font-family:var(--display);font-size:15px;color:#fff;letter-spacing:.3px;margin-bottom:3px">0–399</div>
+ <div style="font-family:var(--mono);font-size:8px;color:rgba(255,255,255,.85);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px">REJECT</div>
+ <div style="font-size:10px;color:rgba(255,255,255,.9);line-height:1.3">DENY, log incident · audit trail</div>
+ </div>
+ </div>
+
+ <!-- USE CASES ROW -->
+ <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px;padding:0 4px">
+ <div style="background:var(--white);border:1px solid var(--light);border-radius:9px;padding:11px 8px;text-align:center">
+ <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="color:var(--coral);margin-bottom:4px"><circle cx="10" cy="7" r="4" stroke="currentColor" stroke-width="1.5"/><path d="M3 18c0-3.866 3.134-7 7-7s7 3.134 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+ <div style="font-family:var(--display);font-size:10px;letter-spacing:.3px;color:var(--dark)">KYC / KYB</div>
+ <div style="font-size:9px;color:var(--muted);margin-top:2px">Onboarding</div>
+ </div>
+ <div style="background:var(--white);border:1px solid var(--light);border-radius:9px;padding:11px 8px;text-align:center">
+ <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="color:var(--coral);margin-bottom:4px"><path d="M2 10h16M10 2v16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/></svg>
+ <div style="font-family:var(--display);font-size:10px;letter-spacing:.3px;color:var(--dark)">INSURANCE</div>
+ <div style="font-size:9px;color:var(--muted);margin-top:2px">FNOL · Claims</div>
+ </div>
+ <div style="background:var(--white);border:1px solid var(--light);border-radius:9px;padding:11px 8px;text-align:center">
+ <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="color:var(--coral);margin-bottom:4px"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+ <div style="font-family:var(--display);font-size:10px;letter-spacing:.3px;color:var(--dark)">CRYPTO</div>
+ <div style="font-size:9px;color:var(--muted);margin-top:2px">MiCA · VASPs</div>
+ </div>
+ <div style="background:var(--white);border:1px solid var(--light);border-radius:9px;padding:11px 8px;text-align:center">
+ <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="color:var(--coral);margin-bottom:4px"><path d="M3 7h14M7 3v4M13 3v4M5 13h4M5 16h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><rect x="2" y="6" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/></svg>
+ <div style="font-family:var(--display);font-size:10px;letter-spacing:.3px;color:var(--dark)">BANKING</div>
+ <div style="font-size:9px;color:var(--muted);margin-top:2px">AML · AMLD6</div>
+ </div>
+ <div style="background:var(--white);border:1px solid var(--light);border-radius:9px;padding:11px 8px;text-align:center">
+ <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="color:var(--coral);margin-bottom:4px"><rect x="2" y="5" width="16" height="12" rx="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 5V4a3 3 0 016 0v1" stroke="currentColor" stroke-width="1.5"/><path d="M10 10v3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+ <div style="font-family:var(--display);font-size:10px;letter-spacing:.3px;color:var(--dark)">AI AGENTS</div>
+ <div style="font-size:9px;color:var(--muted);margin-top:2px">MCP · A2A · ACP</div>
+ </div>
+ <div style="background:var(--white);border:1px solid var(--light);border-radius:9px;padding:11px 8px;text-align:center">
+ <svg width="18" height="18" viewBox="0 0 20 20" fill="none" style="color:var(--coral);margin-bottom:4px"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l3 3 5-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+ <div style="font-family:var(--display);font-size:10px;letter-spacing:.3px;color:var(--dark)">CBDC</div>
+ <div style="font-size:9px;color:var(--muted);margin-top:2px">eIDAS 2.0</div>
+ </div>
+ </div>
+ </div>
+
+ <!-- FOOTER -->
+ <div class="footer">
+ <div>
+ <div class="footer-brand"><span style="color:var(--dark)">KY</span><span style="color:var(--coral)">True</span>™</div>
+ <div class="footer-tag">Powered by Revealense Illuminator® · Tzadok Orgad, Founder & Principal · May 2026 · Strictly Confidential</div>
+ </div>
+ <div class="footer-links">
+ <a href="KYTrue_Product.html">Product</a>
+ <a href="KYTrue_Science.html">Science</a>
+ <a href="KYTrue_Investors.html">Investors</a>
+ <a href="KYTrue_Pricing.html">Pricing</a>
+ </div>
+ </div>
+
+</div>
+</body>
+</html>
