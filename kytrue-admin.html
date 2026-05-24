@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>KYTrue™ — Access Key Manager</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Sora:wght@400;600;700&display=swap');
+
+  :root {
+    --bg: #0f0e0c;
+    --surface: #1a1813;
+    --border: #2a2620;
+    --coral: #ff4d1a;
+    --coral-dim: rgba(255,77,26,.12);
+    --green: #22c55e;
+    --green-dim: rgba(34,197,94,.1);
+    --yellow: #f59e0b;
+    --white: #f5f2ed;
+    --muted: #6b6560;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'Sora', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--bg);
+    color: var(--white);
+    font-family: var(--sans);
+    min-height: 100vh;
+  }
+
+  /* Admin gate */
+  #admin-gate {
+    position: fixed; inset: 0;
+    background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 999;
+    flex-direction: column; gap: 24px;
+  }
+  #admin-gate .gate-logo {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 3px;
+    color: var(--coral); text-transform: uppercase; margin-bottom: 8px;
+  }
+  #admin-gate h1 {
+    font-size: 22px; font-weight: 700; color: var(--white); margin-bottom: 4px;
+  }
+  #admin-gate p { font-size: 13px; color: var(--muted); }
+  #admin-gate .gate-box {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 16px; padding: 32px; width: 360px;
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  #admin-gate input {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--white); font-family: var(--mono); font-size: 15px;
+    padding: 12px 16px; border-radius: 10px; outline: none;
+    letter-spacing: 2px; text-align: center; width: 100%;
+    transition: border-color .2s;
+  }
+  #admin-gate input:focus { border-color: var(--coral); }
+  #admin-gate button {
+    background: var(--coral); color: #fff; border: none;
+    padding: 13px; border-radius: 10px; font-family: var(--sans);
+    font-size: 14px; font-weight: 600; cursor: pointer; width: 100%;
+  }
+  #admin-gate .gate-err { font-size: 12px; color: var(--coral); text-align: center; min-height: 16px; }
+
+  /* Main layout */
+  #app { display: none; min-height: 100vh; }
+
+  header {
+    border-bottom: 1px solid var(--border);
+    padding: 16px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .logo-row { display: flex; align-items: center; gap: 12px; }
+  .logo-mark {
+    width: 34px; height: 34px; background: var(--coral);
+    border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 11px; font-weight: 600; color: #fff;
+  }
+  .logo-text { font-weight: 700; font-size: 16px; }
+  .logo-sub { font-size: 11px; color: var(--muted); font-family: var(--mono); letter-spacing: 1px; }
+  .header-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  main { max-width: 900px; margin: 0 auto; padding: 40px 24px; }
+
+  /* Stats row */
+  .stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 40px; }
+  .stat-card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 20px 24px;
+  }
+  .stat-label { font-size: 11px; color: var(--muted); font-family: var(--mono); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+  .stat-value { font-size: 32px; font-weight: 700; font-family: var(--mono); }
+  .stat-value.coral { color: var(--coral); }
+  .stat-value.green { color: var(--green); }
+
+  /* Section header */
+  .section-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 20px;
+  }
+  .section-title { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); }
+
+  /* Add key form */
+  .add-form {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 14px; padding: 24px; margin-bottom: 32px;
+    display: flex; flex-direction: column; gap: 16px;
+  }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 12px; align-items: end; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .field label { font-size: 11px; color: var(--muted); font-family: var(--mono); letter-spacing: .5px; }
+  .field input, .field select {
+    background: var(--bg); border: 1px solid var(--border);
+    color: var(--white); font-family: var(--mono); font-size: 13px;
+    padding: 10px 14px; border-radius: 8px; outline: none;
+    transition: border-color .2s; width: 100%;
+    -webkit-appearance: none;
+  }
+  .field input:focus, .field select:focus { border-color: var(--coral); }
+  .field select option { background: var(--bg); }
+
+  .btn-add {
+    background: var(--coral); color: #fff; border: none;
+    padding: 10px 20px; border-radius: 8px; font-family: var(--sans);
+    font-size: 13px; font-weight: 600; cursor: pointer; white-space: nowrap;
+    align-self: flex-end;
+  }
+  .btn-add:hover { opacity: .88; }
+
+  /* Keys table */
+  .keys-list { display: flex; flex-direction: column; gap: 8px; }
+
+  .key-row {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 12px; padding: 16px 20px;
+    display: grid; grid-template-columns: 1fr 120px 100px 80px 40px;
+    align-items: center; gap: 16px;
+    transition: border-color .15s;
+  }
+  .key-row:hover { border-color: #3a3630; }
+  .key-row.expired { opacity: .45; }
+
+  .key-code { font-family: var(--mono); font-size: 14px; font-weight: 600; color: var(--white); }
+  .key-label { font-size: 11px; color: var(--muted); margin-top: 3px; }
+
+  .key-type {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 1px;
+    padding: 3px 10px; border-radius: 20px; text-transform: uppercase;
+    font-weight: 600;
+  }
+  .key-type.general { background: var(--coral-dim); color: var(--coral); }
+  .key-type.personal { background: var(--green-dim); color: var(--green); }
+
+  .key-expiry { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+  .key-expiry.soon { color: var(--yellow); }
+  .key-expiry.expired { color: var(--coral); }
+
+  .key-status { display: flex; align-items: center; gap: 6px; font-size: 11px; }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+  .dot.active { background: var(--green); }
+  .dot.expired { background: var(--muted); }
+
+  .btn-remove {
+    background: none; border: 1px solid var(--border);
+    color: var(--muted); width: 32px; height: 32px; border-radius: 8px;
+    cursor: pointer; font-size: 14px; display: flex; align-items: center;
+    justify-content: center; transition: all .15s;
+  }
+  .btn-remove:hover { border-color: var(--coral); color: var(--coral); background: var(--coral-dim); }
+
+  /* Log section */
+  .log-section { margin-top: 40px; }
+  .log-list { display: flex; flex-direction: column; gap: 6px; margin-top: 16px; }
+  .log-row {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 10px 16px;
+    display: flex; align-items: center; gap: 16px;
+    font-family: var(--mono); font-size: 12px;
+  }
+  .log-time { color: var(--muted); min-width: 140px; }
+  .log-code { color: var(--white); font-weight: 600; }
+  .log-result { margin-left: auto; }
+  .log-result.ok { color: var(--green); }
+  .log-result.fail { color: var(--coral); }
+
+  .empty { text-align: center; padding: 40px; color: var(--muted); font-size: 13px; }
+
+  /* Toast */
+  #toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+    background: var(--surface); border: 1px solid var(--border);
+    color: var(--white); padding: 12px 20px; border-radius: 10px;
+    font-size: 13px; font-weight: 500; z-index: 9999;
+    opacity: 0; transition: opacity .25s; pointer-events: none;
+  }
+  #toast.show { opacity: 1; }
+
+  @media (max-width: 600px) {
+    .form-row { grid-template-columns: 1fr 1fr; }
+    .btn-add { grid-column: span 2; }
+    .key-row { grid-template-columns: 1fr auto; gap: 10px; }
+    .key-type, .key-expiry, .key-status { display: none; }
+    .stats { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Admin gate -->
+<div id="admin-gate">
+  <div class="gate-box">
+    <div>
+      <div class="gate-logo">KYTrue™ · Admin</div>
+      <h1>Key Manager</h1>
+      <p style="margin-top:4px">Enter admin password to continue</p>
+    </div>
+    <input id="admin-pw" type="password" placeholder="Admin password" autocomplete="off"/>
+    <div id="admin-err" class="gate-err"></div>
+    <button onclick="adminLogin()">Access dashboard →</button>
+  </div>
+</div>
+
+<!-- Main app -->
+<div id="app">
+  <header>
+    <div class="logo-row">
+      <div class="logo-mark">KY</div>
+      <div>
+        <div class="logo-text">KYTrue™</div>
+        <div class="logo-sub">ACCESS KEY MANAGER</div>
+      </div>
+    </div>
+    <div class="header-meta" id="header-time"></div>
+  </header>
+
+  <main>
+    <!-- Stats -->
+    <div class="stats">
+      <div class="stat-card">
+        <div class="stat-label">Total Keys</div>
+        <div class="stat-value coral" id="stat-total">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Active</div>
+        <div class="stat-value green" id="stat-active">0</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Access Events</div>
+        <div class="stat-value" id="stat-events">0</div>
+      </div>
+    </div>
+
+    <!-- Add key -->
+    <div class="section-header">
+      <div class="section-title">Add new key</div>
+    </div>
+    <div class="add-form">
+      <div class="form-row">
+        <div class="field">
+          <label>Access code</label>
+          <input id="new-code" placeholder="e.g. KYT-2025-DEMO" autocomplete="off"/>
+        </div>
+        <div class="field">
+          <label>Label (recipient)</label>
+          <input id="new-label" placeholder="e.g. Investor — Tal Cohen"/>
+        </div>
+        <button class="btn-add" onclick="addKey()">+ Add key</button>
+      </div>
+      <div class="form-row" style="grid-template-columns:1fr 1fr">
+        <div class="field">
+          <label>Type</label>
+          <select id="new-type">
+            <option value="general">General — shared</option>
+            <option value="personal">Personal — single user</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Expires</label>
+          <select id="new-expiry">
+            <option value="never">Never</option>
+            <option value="7">7 days</option>
+            <option value="30">30 days</option>
+            <option value="90">90 days</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Keys list -->
+    <div class="section-header">
+      <div class="section-title">Active keys</div>
+    </div>
+    <div class="keys-list" id="keys-list">
+      <div class="empty">No keys yet. Add one above.</div>
+    </div>
+
+    <!-- Log -->
+    <div class="log-section">
+      <div class="section-header">
+        <div class="section-title">Access log</div>
+        <button onclick="clearLog()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:6px 14px;border-radius:8px;font-size:11px;cursor:pointer;font-family:var(--sans)">Clear log</button>
+      </div>
+      <div class="log-list" id="log-list">
+        <div class="empty">No access events recorded.</div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<script>
+// ── Config ────────────────────────────────────────────────
+var ADMIN_PW = 'KYAdmin2025'; // Change this
+var KEYS_SK  = '_kyt_mgr_keys';
+var LOG_SK   = '_kyt_mgr_log';
+
+// ── Admin gate ────────────────────────────────────────────
+document.getElementById('admin-pw').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') adminLogin();
+});
+
+function adminLogin(){
+  var pw = document.getElementById('admin-pw').value;
+  if(pw === ADMIN_PW){
+    document.getElementById('admin-gate').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    render();
+    startClock();
+  } else {
+    document.getElementById('admin-err').textContent = 'Incorrect password.';
+    document.getElementById('admin-pw').value = '';
+    document.getElementById('admin-pw').focus();
+  }
+}
+
+// ── Storage ───────────────────────────────────────────────
+function loadKeys(){
+  try { return JSON.parse(localStorage.getItem(KEYS_SK) || '[]'); } catch(e){ return []; }
+}
+function saveKeys(keys){ localStorage.setItem(KEYS_SK, JSON.stringify(keys)); }
+
+function loadLog(){
+  try { return JSON.parse(localStorage.getItem(LOG_SK) || '[]'); } catch(e){ return []; }
+}
+function saveLog(log){ localStorage.setItem(LOG_SK, JSON.stringify(log)); }
+
+// ── Add key ───────────────────────────────────────────────
+function addKey(){
+  var code   = document.getElementById('new-code').value.trim();
+  var label  = document.getElementById('new-label').value.trim();
+  var type   = document.getElementById('new-type').value;
+  var expiry = document.getElementById('new-expiry').value;
+
+  if(!code){ toast('Enter an access code'); return; }
+
+  var keys = loadKeys();
+  if(keys.find(function(k){ return k.code === code; })){
+    toast('Code already exists'); return;
+  }
+
+  var expiresAt = null;
+  if(expiry !== 'never'){
+    expiresAt = Date.now() + parseInt(expiry) * 86400000;
+  }
+
+  keys.push({ code: code, label: label || 'Unnamed', type: type, created: Date.now(), expiresAt: expiresAt });
+  saveKeys(keys);
+  syncToProduct(keys);
+
+  document.getElementById('new-code').value = '';
+  document.getElementById('new-label').value = '';
+  toast('Key added ✓');
+  render();
+}
+
+// ── Remove key ────────────────────────────────────────────
+function removeKey(code){
+  if(!confirm('Remove key "' + code + '"?')) return;
+  var keys = loadKeys().filter(function(k){ return k.code !== code; });
+  saveKeys(keys);
+  syncToProduct(keys);
+  toast('Key removed');
+  render();
+}
+
+// ── Sync codes to site gate (copies to clipboard for manual paste) ─
+function syncToProduct(keys){
+  // Export active codes for pasting into KYTrue_Product_protected.html
+  var active = keys.filter(function(k){ return !isExpired(k); }).map(function(k){ return k.code; });
+  // Store in localStorage so protected page can read them
+  localStorage.setItem('_kyt_active_codes', JSON.stringify(active));
+}
+
+function isExpired(k){
+  if(!k.expiresAt) return false;
+  return Date.now() > k.expiresAt;
+}
+
+function expiryLabel(k){
+  if(!k.expiresAt) return 'No expiry';
+  var days = Math.ceil((k.expiresAt - Date.now()) / 86400000);
+  if(days < 0) return 'Expired';
+  if(days === 0) return 'Expires today';
+  if(days <= 3) return 'Expires in ' + days + 'd';
+  return new Date(k.expiresAt).toLocaleDateString('en-GB', {day:'numeric',month:'short',year:'2-digit'});
+}
+
+// ── Render ────────────────────────────────────────────────
+function render(){
+  var keys = loadKeys();
+  var log  = loadLog();
+
+  var active = keys.filter(function(k){ return !isExpired(k); }).length;
+  document.getElementById('stat-total').textContent  = keys.length;
+  document.getElementById('stat-active').textContent = active;
+  document.getElementById('stat-events').textContent = log.length;
+
+  // Keys list
+  var kl = document.getElementById('keys-list');
+  if(!keys.length){
+    kl.innerHTML = '<div class="empty">No keys yet. Add one above.</div>';
+  } else {
+    kl.innerHTML = keys.map(function(k){
+      var exp = isExpired(k);
+      var expLabel = expiryLabel(k);
+      var expClass = exp ? 'expired' : (k.expiresAt && (k.expiresAt - Date.now()) < 3*86400000 ? 'soon' : '');
+      return '<div class="key-row' + (exp?' expired':'') + '">'
+        + '<div><div class="key-code">' + k.code + '</div><div class="key-label">' + k.label + '</div></div>'
+        + '<span class="key-type ' + k.type + '">' + k.type + '</span>'
+        + '<div class="key-expiry ' + expClass + '">' + expLabel + '</div>'
+        + '<div class="key-status"><div class="dot ' + (exp?'expired':'active') + '"></div><span>' + (exp?'expired':'active') + '</span></div>'
+        + '<button class="btn-remove" onclick="removeKey(\'' + k.code.replace(/'/g,"\\'") + '\')" title="Remove">×</button>'
+        + '</div>';
+    }).join('');
+  }
+
+  // Log
+  var ll = document.getElementById('log-list');
+  if(!log.length){
+    ll.innerHTML = '<div class="empty">No access events recorded.</div>';
+  } else {
+    ll.innerHTML = log.slice().reverse().slice(0,50).map(function(e){
+      return '<div class="log-row">'
+        + '<span class="log-time">' + new Date(e.ts).toLocaleString('en-GB') + '</span>'
+        + '<span class="log-code">' + (e.code || '—') + '</span>'
+        + '<span class="log-result ' + (e.ok?'ok':'fail') + '">' + (e.ok ? '✓ granted' : '✗ denied') + '</span>'
+        + '</div>';
+    }).join('');
+  }
+}
+
+// ── Export codes snippet ──────────────────────────────────
+function exportCodes(){
+  var keys = loadKeys().filter(function(k){ return !isExpired(k); });
+  var codes = keys.map(function(k){ return "'" + k.code + "'"; }).join(',');
+  var snippet = "var _CODES = [" + codes + "];";
+  navigator.clipboard && navigator.clipboard.writeText(snippet).then(function(){
+    toast('Copied to clipboard — paste into KYTrue_Product_protected.html');
+  });
+}
+
+// ── Clear log ─────────────────────────────────────────────
+function clearLog(){
+  if(!confirm('Clear all access log entries?')) return;
+  saveLog([]);
+  render();
+}
+
+// ── Toast ─────────────────────────────────────────────────
+function toast(msg){
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 2200);
+}
+
+// ── Clock ─────────────────────────────────────────────────
+function startClock(){
+  function tick(){
+    document.getElementById('header-time').textContent =
+      new Date().toLocaleString('en-GB', {weekday:'short',day:'numeric',month:'short',hour:'2-digit',minute:'2-digit'});
+  }
+  tick();
+  setInterval(tick, 10000);
+}
+
+// ── Init: pre-load default codes if empty ─────────────────
+(function(){
+  var keys = loadKeys();
+  if(!keys.length){
+    var d90 = Date.now() + 90 * 86400000;
+    var d30 = Date.now() + 30 * 86400000;
+    keys = [
+      { code: 'KYTrue2024',   label: 'Legacy — general access',         type: 'general',  created: Date.now(), expiresAt: null },
+      { code: 'KYT-DEMO-25',  label: 'Demo — general link',             type: 'general',  created: Date.now(), expiresAt: d90 },
+      { code: 'KYT-LIVE-01',  label: 'Demo — live presentation',        type: 'personal', created: Date.now(), expiresAt: d30 },
+      { code: 'KYT-INV-SEED', label: 'Investor — seed round',           type: 'general',  created: Date.now(), expiresAt: d90 },
+      { code: 'KYT-INV-A01',  label: 'Investor — contact A (personal)', type: 'personal', created: Date.now(), expiresAt: d90 },
+      { code: 'KYT-INV-B01',  label: 'Investor — contact B (personal)', type: 'personal', created: Date.now(), expiresAt: d90 },
+      { code: 'KYT-PTR-HYP',  label: 'Partner — Hypernative',           type: 'personal', created: Date.now(), expiresAt: d90 }
+    ];
+    saveKeys(keys);
+    syncToProduct(keys);
+  }
+})();
+
+// ── Export button in header ───────────────────────────────
+document.addEventListener('DOMContentLoaded', function(){
+  var hdr = document.querySelector('header .header-meta');
+  var btn = document.createElement('button');
+  btn.textContent = 'Export codes →';
+  btn.style.cssText = 'background:none;border:1px solid #2a2620;color:#6b6560;padding:6px 14px;border-radius:8px;font-size:11px;cursor:pointer;font-family:Sora,sans-serif;margin-left:16px';
+  btn.onclick = exportCodes;
+  hdr.parentNode.appendChild(btn);
+});
+</script>
+</body>
+</html>

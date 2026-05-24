@@ -274,7 +274,11 @@ section{max-width:1280px;margin:0 auto;padding:80px 24px;scroll-margin-top:80px}
 
 <script>
 (function(){
-  var _CODES = ['KYTrue2024','Demo@KY','preview-ok'];
+  // Load codes from admin manager (localStorage) + fallback hardcoded
+  var _STORED = (function(){
+    try { return JSON.parse(localStorage.getItem('_kyt_active_codes') || '[]'); } catch(e){ return []; }
+  })();
+  var _CODES = _STORED.length ? _STORED : ['KYTrue2024','Demo@KY','preview-ok'];
   var _MAX   = 5;
   var _LOCK  = 30 * 60 * 1000;
   var _SK    = '_kyt_auth';
@@ -327,10 +331,22 @@ section{max-width:1280px;margin:0 auto;padding:80px 24px;scroll-margin-top:80px}
     }
 
     if(ok){
+      // Log successful access
+      try {
+        var log = JSON.parse(localStorage.getItem('_kyt_mgr_log') || '[]');
+        log.push({ ts: Date.now(), code: val, ok: true });
+        localStorage.setItem('_kyt_mgr_log', JSON.stringify(log));
+      } catch(e){}
       sessionStorage.setItem(_SK, JSON.stringify({ok:true,ts:_now()}));
       sessionStorage.removeItem(_FK);
       window.location.href = 'KYTrue_Product.html';
     } else {
+      // Log failed attempt
+      try {
+        var log = JSON.parse(localStorage.getItem('_kyt_mgr_log') || '[]');
+        log.push({ ts: Date.now(), code: val || '(empty)', ok: false });
+        localStorage.setItem('_kyt_mgr_log', JSON.stringify(log));
+      } catch(e){}
       fails++;
       sessionStorage.setItem(_FK, fails.toString());
       var left = _MAX - fails;
